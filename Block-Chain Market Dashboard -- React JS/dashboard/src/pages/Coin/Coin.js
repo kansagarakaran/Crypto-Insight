@@ -26,29 +26,6 @@ const Coin = () => {
       .catch((err) => console.error(err));
   };
 
-  // const fetchHistoricalData = async () => {
-  //   const options = {
-  //     method: "GET",
-  //     headers: {
-  //       accept: "application/json",
-  //       "x-cg-demo-api-key": "CG-sFLsL4dgJ3qWdLNZbNaBzPSJ",
-  //     },
-  //   };
-
-  //   fetch(
-  //     `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&${chartTime}&interval=daily`,
-  //     options
-  //   )
-  //     .then((response) => response.json())
-  //     .then((response) => setHistoricalData(response))
-  //     .catch((err) => console.error(err));
-  // };
-
-  // useEffect(() => {
-  //   fetchCoinData();
-  //   fetchHistoricalData();
-  // }, [currency]);
-
   const fetchHistoricalData = useCallback(
     debounce(async (time) => {
       const options = {
@@ -85,77 +62,124 @@ const Coin = () => {
   if (coinData && historicalData) {
     return (
       <div className="min-h-[68vh] w-screen">
-        <div className="flex justify-between items-center mx-[150px] my-12">
-          <div className="flex gap-7 items-center">
-            <img src={coinData.image.large} alt="" width={40} />
-            <p className="text-[#FEE715] text-3xl">
+        <div className="flex justify-between items-center mx-[150px] my-12 max-[1400px]:mx-[100px] max-md:mx-[50px] max-[465px]:flex-col max-[465px]:gap-3">
+          <div className="flex gap-7 items-center max-lg:gap-4">
+            <img src={coinData.image.large} alt="" width={40} className="max-lg:w-7"/>
+            <p className="text-[#FEE715] text-3xl max-lg:text-2xl max-[675px]:text-base">
               <b>{coinData.name}</b> ({coinData.symbol.toUpperCase()})
             </p>
           </div>
-          <div className="text-[#FEE715] text-3xl font-bold">
+          <div className="text-[#FEE715] text-3xl font-bold max-lg:text-2xl max-[675px]:text-base">
             Current Price : {currency.symbol}  {coinData.market_data.current_price[currency.name].toLocaleString()}
           </div>
         </div>
 
         <div className="flex w-screen">
-          <div className="flex flex-col gap-8 ">
-          <div className="flex gap-5 text-[#101820] justify-center">
-            <button type="button" value="days=1" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715]" onClick={changeTime}>1-Day</button>
-            <button type="button" value="days=10" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715]" onClick={changeTime}>10-Day</button>
-            <button type="button" value="days=30" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715]" onClick={changeTime}>30-Day</button>
-            <button type="button" value="days=180" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715]" onClick={changeTime}>180-Day</button>
-            <button type="button" value="days=365" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715]" onClick={changeTime}>365-Day</button>
-          </div>
-          <div className="ml-6 min-w-[900px] flex flex-col justify-end items-center">
-            <LineChart historicalData={historicalData} />
-          </div>
+          <div className="flex flex-col gap-8 max-[1165px]:gap-2 max-md:gap-0 max-md:ml-0">
+            <div className="flex gap-5 text-[#101820] justify-center max-[750px]:justify-start max-[750px]:mx-12 max-[750px]:gap-3 max-[455px]:mx-6 max-[375px]:gap-1 max-[375px]:mx-3">
+              <button type="button" value="days=1" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715] max-md:py-1 max-md:px-4 max-md:text-xs max-[750px]:px-2" onClick={changeTime}>1-Day</button>
+              <button type="button" value="days=10" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715] max-md:py-1 max-md:px-4 max-md:text-xs max-[750px]:px-2" onClick={changeTime}>10-Day</button>
+              <button type="button" value="days=30" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715] max-md:py-1 max-md:px-4 max-md:text-xs max-[750px]:px-2" onClick={changeTime}>30-Day</button>
+              <button type="button" value="days=180" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715] max-md:py-1 max-md:px-4 max-md:text-xs max-[750px]:px-2" onClick={changeTime}>180-Day</button>
+              <button type="button" value="days=365" className="border border-opacity-50 bg-[#FEE715] border-[#FEE715] py-2 px-5 font-medium transition duration-200 rounded-sm hover:bg-[#101820] hover:text-[#FEE715] max-md:py-1 max-md:px-4 max-md:text-xs max-[750px]:px-2" onClick={changeTime}>365-Day</button>
+            </div>
+            <div className="min-w-[800px] flex justify-center items-center max-[1165px]:w-[100vw] max-[750px]:justify-start max-[750px]:mb-5 max-[455px]:my-5">
+              <LineChart historicalData={historicalData} />
+            </div>
           </div>
           
-          <div className="text-[#FEE715] w-screen gap-5 mx-6 grid grid-cols-2 mr-16">
-            <ul className="border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center h-[130px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
-              <li className="text-xl font-bold">Crypto Market Rank</li>
-              <li className="font-medium text-xl">
+          <div className="text-[#FEE715] w-screen gap-5 grid grid-cols-2 mr-16 max-[1165px]:hidden">
+            <ul className="border border-opacity-50 border-[#FEE715] flex flex-col gap-3 text-center max-h-[130px] min-w-[140px] justify-center hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">Crypto Market Rank</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
                 # {coinData.market_cap_rank}
               </li>
             </ul>
-            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center h-[130px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
-              <li className="text-xl font-bold">Market Cap</li>
-              <li className="font-medium text-xl">
+            <ul className=" border border-opacity-50 border-[#FEE715] flex flex-col gap-3 text-center max-h-[130px] min-w-[140px] justify-center hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">Market Cap</li>
+              <li className="font-medium text-lg max-[1400px]:text-base max-[1325px]:text-sm">
                 {currency.symbol}  {coinData.market_data.market_cap[
                   currency.name
                 ].toLocaleString()}
               </li>
             </ul>
-            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center h-[130px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
-              <li className="text-xl font-bold">24HR High Price</li>
-              <li className="font-medium text-xl">
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center max-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">24HR High Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
                 
                 {currency.symbol}  {coinData.market_data.high_24h[currency.name].toLocaleString()}
               </li>
             </ul>
-            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center h-[130px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
-              <li className="text-xl font-bold">24HR Low Price</li>
-              <li className="font-medium text-xl">
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center  max-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">24HR Low Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
                 
                 {currency.symbol}  {coinData.market_data.low_24h[currency.name].toLocaleString()}
               </li>
             </ul>
-            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center h-[130px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
-              <li className="text-xl font-bold">All Time High Price</li>
-              <li className="font-medium text-xl">
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center  max-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">All Time High Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
                 
                 {currency.symbol}  {coinData.market_data.ath[currency.name].toLocaleString()}
               </li>
             </ul>
-            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center h-[130px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
-              <li className="text-xl font-bold">All Time Low Price</li>
-              <li className="font-medium text-xl">
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center  max-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">All Time Low Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
                 
                 {currency.symbol}  {coinData.market_data.atl[currency.name].toLocaleString()}
               </li>
             </ul>
           </div>
         </div>
+        
+          {/* responsive design - bottom details of crypto */}
+          
+          <div className="text-[#FEE715] max-w-[800px] gap-5 grid grid-cols-3 min-[1165px]:hidden m-auto px-10 max-[550px]:flex-col max-[550px]:flex max-[550px]:items-center max-[550px]:mt-5">
+            <ul className="border border-opacity-50 border-[#FEE715] flex flex-col gap-3 text-center min-h-[130px] min-w-[140px] justify-center hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm max-[550px]:flex-row max-[550px]:items-center max-[550px]:w-[110%] max-[550px]:min-h-[40px] max-[550px]:justify-between max-[550px]:border-0 max-[550px]:border-b max-[550px]:pb-5">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">Crypto Market Rank</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
+                # {coinData.market_cap_rank}
+              </li>
+            </ul>
+            <ul className=" border border-opacity-50 border-[#FEE715] flex flex-col gap-3 text-center max-h-[130px] min-w-[140px] justify-center hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm max-[550px]:flex-row max-[550px]:items-center max-[550px]:w-[110%] max-[550px]:min-h-[40px] max-[550px]:justify-between max-[550px]:border-0 max-[550px]:border-b max-[550px]:pb-5">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">Market Cap</li>
+              <li className="font-medium text-lg max-[1400px]:text-base max-[1325px]:text-sm">
+                {currency.symbol}  {coinData.market_data.market_cap[
+                  currency.name
+                ].toLocaleString()}
+              </li>
+            </ul>
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center max-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm max-[550px]:flex-row max-[550px]:items-center max-[550px]:w-[110%] max-[550px]:min-h-[40px] max-[550px]:justify-between max-[550px]:border-0 max-[550px]:border-b max-[550px]:pb-5">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">24HR High Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
+                
+                {currency.symbol}  {coinData.market_data.high_24h[currency.name].toLocaleString()}
+              </li>
+            </ul>
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center  max-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm max-[550px]:flex-row max-[550px]:items-center max-[550px]:w-[110%] max-[550px]:min-h-[40px] max-[550px]:justify-between max-[550px]:border-0 max-[550px]:border-b max-[550px]:pb-5">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">24HR Low Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
+                
+                {currency.symbol}  {coinData.market_data.low_24h[currency.name].toLocaleString()}
+              </li>
+            </ul>
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center  max-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm max-[550px]:flex-row max-[550px]:items-center max-[550px]:w-[110%] max-[550px]:min-h-[40px] max-[550px]:justify-between max-[550px]:border-0 max-[550px]:border-b max-[550px]:pb-5">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">All Time High Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
+                
+                {currency.symbol}  {coinData.market_data.ath[currency.name].toLocaleString()}
+              </li>
+            </ul>
+            <ul className=" border border-opacity-50 border-[#FEE715]  flex flex-col gap-3 text-center min-h-[130px] min-w-[140px] justify-center  hover:bg-[#FEE715] hover:text-[#101820] transition duration-200 rounded-sm max-[550px]:flex-row max-[550px]:items-center max-[550px]:w-[110%] max-[550px]:min-h-[40px] max-[550px]:justify-between max-[550px]:border-0 max-[550px]:pb-5">
+              <li className="text-xl font-bold max-[1400px]:text-base max-[1325px]:text-sm">All Time Low Price</li>
+              <li className="font-medium text-xl max-[1400px]:text-base max-[1325px]:text-sm">
+                
+                {currency.symbol}  {coinData.market_data.atl[currency.name].toLocaleString()}
+              </li>
+            </ul>
+          </div>
       </div>
     );
   } else {

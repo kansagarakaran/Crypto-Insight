@@ -38,9 +38,8 @@ const LineChart = ({ historicalData }) => {
     <Chart
         chartType='LineChart'
         data={data}
-        height={400}
+        className='w-[800px] h-[400px] max-md:h-[300px] max-md:w-[650px] max-[600px]:h-[250px] max-[600px]:w-[500px] max-[455px]:h-[200px] max-[455px]:w-[400px] max-[355px]:h-[150px] max-[355px]:w-[350px]'
         options={options}
-        width={800}
     />
   )
 }
